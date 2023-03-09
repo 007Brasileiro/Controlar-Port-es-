@@ -1,0 +1,61 @@
+Controle de Portão Elétrico
+
+
+Antônio Caleb Silva De Lima
+Crie um código para esp8266 sobre abrir e fechar portões elétricos 
+
+Para criar um código para controlar a abertura e fechamento de portões elétricos utilizando o módulo ESP8266, você pode seguir os seguintes passos:
+
+Conectar o ESP8266 ao circuito do portão elétrico, de modo que ele possa enviar sinais para abrir e fechar o portão.
+
+Configurar o ESP8266 para se conectar à rede Wi-Fi local.
+
+Definir os pinos de entrada e saída do ESP8266 que serão usados para controlar o portão.
+
+Escrever funções para enviar sinais para o portão elétrico.
+
+Segue abaixo um exemplo de código que pode ser usado para controlar um portão elétrico
+
+
+#include <ESP8266WiFi.h>
+
+// Definir as credenciais da rede WiFi local
+const char* ssid = "NOME_DA_REDE";
+const char* password = "SENHA_DA_REDE";
+
+// Definir os pinos de entrada e saída
+const int buttonPin = 4; // Botão para abrir/fechar o portão
+const int gatePin = 5; // Pino de saída para enviar o sinal para o portão
+
+// Inicializar o cliente WiFi
+WiFiClient client;
+
+void setup() {
+  // Inicializar a comunicação serial
+  Serial.begin(115200);
+
+  // Conectar ao WiFi local
+  WiFi.begin(ssid, password);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(1000);
+    Serial.println("Conectando ao WiFi...");
+  }
+
+  // Configurar os pinos de entrada e saída
+  pinMode(buttonPin, INPUT_PULLUP);
+  pinMode(gatePin, OUTPUT);
+}
+
+void loop() {
+  // Verificar se o botão foi pressionado
+  if (digitalRead(buttonPin) == LOW) {
+    // Enviar o sinal para abrir o portão
+    digitalWrite(gatePin, HIGH);
+    delay(1000);
+    digitalWrite(gatePin, LOW);
+  }
+}
+
+
+Neste exemplo, quando o botão conectado ao pino 4 é pressionado, o sinal é enviado para o pino 5, que controla a abertura e fechamento do portão elétrico. É importante lembrar que a configuração dos pinos pode variar dependendo do circuito do portão elétrico que está sendo utilizado.
+
